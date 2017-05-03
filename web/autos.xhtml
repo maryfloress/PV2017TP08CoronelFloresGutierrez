@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:panel id="pnlAutos" header="Alta de Autos">
+            <h:form id="frmAutos">
+                <p:panelGrid id="tblAltaAutos" columns="2">
+                    
+                    <p:outputLabel for="txtPatente" value="Patente: "/>
+                    <p:inputText id="txtPatente" value="#{autoFormBean.patente}" required="true"/>
+                    
+                    <p:outputLabel id="lblMArca" value="Marca: "/>
+                    <p:inputText id="txtMarca" value="#{autoFormBean.marca}" required="true"/>
+                    
+                    <p:outputLabel id="lblModelo" value="Modelo: "/>
+                    <p:inputText id="txtModelo" value="#{autoFormBean.modelo}" required="true"/>
+                    
+                    <p:outputLabel id="lblColor" value="Color: "/>
+                    <p:inputText id="txtColor" value="#{autoFormBean.color}" required="true"/>
+                    
+                    <p:outputLabel id="lblCombustible" value="Combustible: "/>
+                    <p:inputText id="txtCombustible" value="#{autoFormBean.combustible}" required="true"/>
+                    
+                    <p:commandButton id="btnAgregarAuto" value="Agregar" 
+                                     actionListener="#{autoFormBean.agregarAuto()}" 
+                                     update="tblMuestraAutos"/>                
+                </p:panelGrid>
+                
+                <p:panelGrid id="tblMuestraAutos" columns="7">
+                    <p:dataTable id="dtTblAutos" value="#{autoFormBean.autos.autos}"
+                                 var="cadaAuto" emptyMessage="No hay nada">
+                        <p:column headerText="Patente">
+                            <p:outputLabel value="#{cadaAuto.patente}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Marca">
+                            <p:outputLabel value="#{cadaAuto.marca}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Modelo">
+                            <p:outputLabel value="#{cadaAuto.modelo}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Color">
+                            <p:outputLabel value="#{cadaAuto.color}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Combustible">
+                            <p:outputLabel value="#{cadaAuto.combustible}"/>
+                        </p:column>
+                        <p:column headerText="Edicion">
+                            <p:commandButton icon="ui-icon-pencil" oncomplete="PF('modificarAuto').show()" 
+                                             update=":frmModificarAuto" 
+                                             actionListener="#{autoFormBean.establecerAuto(cadaAuto)}"/>
+                            <p:commandButton icon="ui-icon-trash" oncomplete="PF('eliminarAuto').show()" 
+                                             update=":frmEliminarAuto" 
+                                             actionListener="#{autoFormBean.establecerAuto(cadaAuto)}"/>
+                        </p:column>                        
+                    </p:dataTable>
+                </p:panelGrid>
+            </h:form>
+            
+            <p:dialog id="dlgModificarAuto" widgetVar="modificarAuto"
+                      header="Modificacion de Auto" resizable="false" 
+                      showEffect="explode" hideEffect="explode" modal="true">
+                <h:form id="fmrModificarAuto">
+                    <h:panelGrid id="pnlModificarAuto" columns="2">
+                        <p:outputLabel for="patente" value="Patente: "/>
+                        <p:inputText id="patente" required="true"
+                                     value="#{autoFormBean.auto.patente}"/>
+                                     
+                        <p:outputLabel for="marca" value="Marca: "/>
+                        <p:inputText id="marca" required="true"
+                                     value="#{autoFormBean.auto.marca}"/>
+                        
+                        <p:outputLabel for="modelo" value="Modelo: "/>
+                        <p:inputText id="modelo" required="true"
+                                     value="#{autoFormBean.auto.modelo}"/>
+                        
+                        <p:outputLabel for="color" value="Color: "/>
+                        <p:inputText id="color" required="true"
+                                     value="#{autoFormBean.auto.color}"/>
+                        
+                        <p:outputLabel for="combustible" value="Combustible: "/>
+                        <p:inputText id="combustible" required="true"
+                                     value="#{autoFormBean.auto.combustible}"/>
+                        <p:commandButton id="btnModificarAuto" value="Modificar" 
+                                         oncomplete="PF('modificarAuto').hide()" 
+                                         update=":frmAutos" actionListener="#{autoFormBean.modificarAuto()}">
+                            <p:confirm header="Pedido de Confirmacion" message="¿Confirma Modificar Auto?" icon="ui-icon-alert"/>                        
+                        </p:commandButton>
+                        <p:commandButton id="btnCerrarModificarAuto" value="Salir" oncomplete="PF('modificarAuto').hide()"/>
+                    </h:panelGrid>
+                </h:form> 
+                
+            </p:dialog>
+            
+            <p:dialog id="dlgELiminarAuto" widgetVar="eliminarAuto" header="Eliminacion de Auto" resizable="false" showEffect="explode" hideEffect="explode" modal="true">
+            <h:form id="frmEliminarAuto">
+                <h:panelGrid id="pnlEliminarAuto" columns="2">
+                        <p:outputLabel for="patente" value="Patente: "/>
+                        <p:outputLabel id="patente"
+                                     value="#{autoFormBean.auto.patente}"/>
+                                     
+                        <p:outputLabel for="marca" value="Marca: "/>
+                        <p:outputLabel id="marca"
+                                     value="#{autoFormBean.auto.marca}"/>
+                        
+                        <p:outputLabel for="modelo" value="Modelo: "/>
+                        <p:outputLabel id="modelo"
+                                     value="#{autoFormBean.auto.modelo}"/>
+                        
+                        <p:outputLabel for="color" value="Color: "/>
+                        <p:outputLabel id="color"
+                                     value="#{autoFormBean.auto.color}"/>
+                        
+                        <p:outputLabel for="combustible" value="Combustible: "/>
+                        <p:outputLabel id="combustible"
+                                     value="#{autoFormBean.auto.combustible}"/>
+                        
+                        <p:commandButton id="btnEliminarAuto" value="Eliminar" 
+                                         oncomplete="PF('eliminarAuto').hide()" 
+                                         update=":frmAutos" >
+                            <p:confirm header="Pedido de Confirmacion" message="¿Confirma Eliminar Auto?" icon="ui-icon-alert"/>                        
+                        </p:commandButton>
+                        <p:commandButton id="btnCerrarEliminarAuto" value="Salir" oncomplete="PF('eliminarAuto').hide()"/>
+                    </h:panelGrid>
+            </h:form>
+            </p:dialog>
+            <p:confirmDialog id="confirmacionDialogoAuto" global="true" showEffect="fade" hideEffect="fade">
+                <h:form id="frmConfirmacionOperacionAuto">
+                    <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                    <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" style="float: right;"/>
+                </h:form>
+            </p:confirmDialog>
+        </p:panel>   
+    </h:body>
+</html>
+

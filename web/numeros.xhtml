@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:panel id="pnlNumeros" header="Ingreso Numeros">
+            <h:form id="frmNumeros">
+                <p:message id="msgMensaje" for="txtNumero"/>
+                <h:panelGrid id="lblNumero" columns="4">
+                    <p:outputLabel id="lblNumero" value="Ingresar Numero"/>
+                    <p:inputText id="txtNumero" value="#{numeroFormBean.numer}" required="true"/>
+                    <p:commandButton id="btnAgregarNumero" value="Agregar" actionListener="#{numeroFormBean.agregarNumeros()}" update="tblNumeros msgMensaje"/>             
+                    <p:outputLabel id="datos" value="#{numeroFormBean.numeros.texto}"/>             
+                </h:panelGrid>
+            </h:form>
+        </p:panel>
+    </h:body>
+</html>
+
